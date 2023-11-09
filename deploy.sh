@@ -1,15 +1,12 @@
 #!/bin/bash
 
 # Update package manager
-sudo yum update -y
+sudo apt update -y
 
 # Install Docker
-sudo amazon-linux-extras install docker -y
+sudo apt install docker -y
 sudo service docker start
-sudo usermod -aG docker ec2-user
-
-# Optional: Start Docker on boot
-sudo chkconfig docker on
+sudo usermod -aG docker ubuntu
 
 # Check if container with name "app" is running
 if sudo docker ps -a --format '{{.Names}}' | grep -q "app"; then
