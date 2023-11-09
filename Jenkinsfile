@@ -61,7 +61,7 @@ pipeline {
                 echo "Deploying"
                 script {
                     // SSH agent block for deploying with an SSH key
-                    sshagent(['key']) {
+                    sshagent(['bddc4b19-67eb-4fa7-96bd-eb87534b2e39']) {
                         // Execute the deploy.sh script from the GitHub master branch
                         sh 'ssh ec2-user@18.60.251.62 "bash -s" < deploy.sh'
                     }
