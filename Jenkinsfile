@@ -21,8 +21,8 @@ pipeline {
                 expression { env.GIT_BRANCH ==~ /dev/ }
             }
             steps {
+                echo "Building and Testing for Dev Branch"
                 script {
-                    echo "Building and Testing for Dev Branch"
                     withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
                         sh "docker build -t app ."
                         sh "docker tag app:latest adnaansidd/dev:latest"
@@ -37,8 +37,8 @@ pipeline {
                 expression { env.GIT_BRANCH ==~ /master/ }
             }
             steps {
+                echo "Building and Testing for Master Branch"
                 script {
-                    echo "Building and Testing for Master Branch"
                     withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
                         sh "docker build -t app ."
                         sh "docker tag app:latest adnaansidd/prod:latest"
