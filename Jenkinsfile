@@ -16,14 +16,33 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
+        stage('Build and Test for Dev Branch') {
+            when {
+                expression { env.GIT_BRANCH ==~ /dev/ }
+            }
             steps {
                 script {
-                    echo "Building and Testing"
+                    echo "Building and Testing for Dev Branch"
                     withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
                         sh "docker build -t app ."
                         sh "docker tag app:latest adnaansidd/dev:latest"
                         sh "docker push adnaansidd/dev:latest"
+                    }
+                }
+            }
+        }
+
+        stage('Build and Test for Master Branch') {
+            when {
+                expression { env.GIT_BRANCH ==~ /master/ }
+            }
+            steps {
+                script {
+                    echo "Building and Testing for Master Branch"
+                    withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
+                        sh "docker build -t app ."
+                        sh "docker tag app:latest adnaansidd/prod:latest"
+                        sh "docker push adnaansidd/prod:latest"
                     }
                 }
             }
@@ -43,3 +62,4 @@ pipeline {
         }
     }
 }
+
