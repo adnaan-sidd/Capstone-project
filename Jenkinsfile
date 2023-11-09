@@ -49,23 +49,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
-            when {
-                allOf {
-                    expression { env.GIT_BRANCH == 'origin/master' && env.CHANGESET != null }
-                    expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-                }
-            }
-            steps {
-                sh "scp -tt -o StrictHostKeyChecking=no -i deploy.sh ubuntu@18.60.57.71:/home/ubuntu/"
-                sshagent(['ssh-agent']) {
-                    sh "ssh -tt -o StrictHostKeyChecking=no ubuntu@18.60.57.71 ls"
-                    sh "chmod +x deploy.sh"
-                    sh "./deploy.sh"
-                }
-            }
-        }
     }
 }
 
