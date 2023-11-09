@@ -59,7 +59,13 @@ pipeline {
             }
             steps {
                 echo "Deploying"
-                sh "docker run -d -p 80:80 --name web-server adnaansidd/prod:latest"
+                script {
+                    // SSH agent block for deploying with an SSH key
+                    sshagent(['key']) {
+                        // Execute the deploy.sh script from the GitHub master branch
+                        sh 'ssh ec2-user@18.60.251.62 "bash -s" < deploy.sh'
+                    }
+                }
             }
         }
     }
