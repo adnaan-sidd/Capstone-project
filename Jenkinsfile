@@ -16,33 +16,26 @@ pipeline {
             }
         }
 
-        stage('Build and Test for Dev Branch') {
-            when {
-                expression { env.GIT_BRANCH ==~ /dev/ }
-            }
+        stage('Build and Test') {
             steps {
-                echo "Building and Testing for Dev Branch"
                 script {
-                    withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
-                        sh "docker build -t app ."
-                        sh "docker tag app:latest adnaansidd/dev:latest"
-                        sh "docker push adnaansidd/dev:latest"
-                    }
-                }
-            }
-        }
-
-        stage('Build and Test for Master Branch') {
-            when {
-                expression { env.GIT_BRANCH ==~ /master/ }
-            }
-            steps {
-                echo "Building and Testing for Master Branch"
-                script {
-                    withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
-                        sh "docker build -t app ."
-                        sh "docker tag app:latest adnaansidd/prod:latest"
-                        sh "docker push adnaansidd/prod:latest"
+                    echo "Building and Testing"
+                    if (env.GIT_BRANCH ==~ /dev/) {
+                        echo "Building for Dev Branch"
+                        withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
+                            sh "docker build -t app ."
+                            sh "docker tag app:latest adnaansidd/dev:latest"
+                            sh "docker push adnaansidd/dev:latest"
+                        }
+                    } else if (env.GIT_BRANCH ==~ /master/) {
+                        echo "Building for Master Branch"
+                        withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
+                            sh "docker build -t app ."
+                            sh "docker tag app:latest adnaansidd/prod:latest"
+                            sh "docker push adnaansidd/prod:latest"
+                        }
+                    } else {
+                        echo "Skipping Build and Test for unknown branch"
                     }
                 }
             }
