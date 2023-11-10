@@ -36,4 +36,6 @@ if sudo docker ps -a --format '{{.Names}}' | grep -q "app"; then
 fi
 
 # Run a new container with the name "app"
-sudo docker run -d -p 80:80 --name app adnaansidd/prod:latest
+docker login -u adnaansidd -p 26122001As@
+docker pull adnaansidd/prod:latest
+docker run -d -p 80:80 --name app adnaansidd/prod:latest
