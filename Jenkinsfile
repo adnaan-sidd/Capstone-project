@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo "Building and Testing for Dev Branch"
                 script {
-                    withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: 'dockerh', toolName: 'docker') {
                         sh "docker build -t app ."
                         sh "docker tag app:latest adnaansidd/dev:latest"
                         sh "docker push adnaansidd/dev:latest"
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 echo "Building and Testing for Master Branch"
                 script {
-                    withDockerRegistry(credentialsId: 'DOCKERHUB', toolName: 'docker') {
+                    withDockerRegistry(credentialsId: 'dockerh', toolName: 'docker') {
                         sh "docker build -t app ."
                         sh "docker tag app:latest adnaansidd/prod:latest"
                         sh "docker push adnaansidd/prod:latest"
@@ -59,9 +59,9 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    sshUsernameprivatekey(credentials: 'server-credentials', usernameVariable: USER, privatekeyVariable: PKEY)
+                    sshUsernameprivatekey(credentials: 'ssh', usernameVariable: USER, privatekeyVariable: PKEY)
                 ])
-                sh "ssh -o StrictHostKeyChecking=no ${PKEY} ubuntu@18.61.32.218"
+                sh "ssh -o StrictHostKeyChecking=no ${PKEY} ubuntu@18.60.83.91"'pwd'
             }
         }
     }
