@@ -18,4 +18,5 @@ if sudo docker ps -a --format '{{.Names}}' | grep -q "app"; then
 fi
 
 # Run a new container with the name "app"
+sudo docker pull adnaansidd/prod:latest
 sudo docker run -d -p 80:80 --name app adnaansidd/prod:latest
