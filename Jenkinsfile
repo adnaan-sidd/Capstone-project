@@ -59,9 +59,9 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    sshUsernameprivatekey(credentials: 'ssh', usernameVariable: USER, privatekeyVariable: PKEY)
+                    sshUsernameprivatekey(credentials: 'ssh', usernameVariable: USER, privatekeyVariable: Key)
                 ])
-                sh "ssh -o StrictHostKeyChecking=no ${PKEY} ubuntu@18.60.83.91 'pwd'"
+                sh "ssh -o StrictHostKeyChecking=no ${Key} ubuntu@18.60.83.91 'pwd'"
             }
         }
     }
