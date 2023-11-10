@@ -59,10 +59,10 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    sshUsernameprivatekey(credentials: ('ssh'), usernameVariable: USER, privatekeyVariable: Key)
+                    sshUsernameprivatekey(credentials: ('ssh'), usernameVariable: USER, privatekeyVariable: KEY)
                 ])
-                scp -o StrictHostKeyChecking=no -i ${Key} deploy.sh ubuntu@18.60.83.91:/home/ubuntu/
-                sh "ssh -o StrictHostKeyChecking=no -i ${Key} ubuntu@18.60.83.91 'pwd'"
+                sh "scp -o StrictHostKeyChecking=no -i ${USER} ${KEY} deploy.sh ubuntu@18.60.83.91:/home/ubuntu/"
+                sh "ssh -o StrictHostKeyChecking=no -i ${USER} ${KEY} ubuntu@18.60.83.91 'pwd'"
             }
         }
     }
