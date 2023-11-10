@@ -4,8 +4,7 @@
 sudo apt update -y
 
 # Install Docker
-sudo apt install docker -y
-sudo service docker start
+sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu
 
 # Check if container with name "app" is running
