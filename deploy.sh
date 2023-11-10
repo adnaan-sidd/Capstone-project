@@ -6,7 +6,6 @@ if ! command -v docker &> /dev/null; then
   echo "Installing Docker..."
   sudo apt update -y
   sudo apt install docker.io -y
-  sudo usermod -aG docker ubuntu
 else
   echo "Docker is already installed."
 fi
