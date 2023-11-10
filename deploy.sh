@@ -4,8 +4,8 @@
 if ! command -v docker &> /dev/null; then
   # Docker is not installed, so update package manager and install Docker
   echo "Installing Docker..."
- sudo apt update
-sudo apt install ca-certificates curl gnupg
+ sudo apt update -y
+sudo apt install ca-certificates curl gnupg -y
 
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
