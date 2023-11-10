@@ -49,6 +49,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+            when {
+                allOf {
+                    expression { env.GIT_BRANCH == 'origin/master' && env.CHANGESET != null }
+                    expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+                }
+            }
+            steps {
+                withCredentials([
+                    sshUsernameprivatekey(credentials: 'server-credentials', usernameVariable: USER, privatekeyVariable: PKEY)
+                ])
+                sh "ssh -o StrictHostKeyChecking=no ${PKEY} ubuntu@18.61.32.218"
+            }
+        }
     }
 }
-
