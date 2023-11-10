@@ -58,11 +58,8 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([
-                    sshUsernameprivatekey(credentials: ('ssh'), usernameVariable: USER, privatekeyVariable: KEY)
-                ])
-                sh "scp -o StrictHostKeyChecking=no -i ${USER} ${KEY} deploy.sh ubuntu@18.60.83.91:/home/ubuntu/"
-                sh "ssh -o StrictHostKeyChecking=no -i ${USER} ${KEY} ubuntu@18.60.83.91 'pwd'"
+                echo "Triggering Deployment Freestyle Project"
+                build job: 'Deployment', wait: false
             }
         }
     }
